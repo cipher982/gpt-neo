@@ -105,6 +105,45 @@ def split_list(l, n):
     # splits list/string into n size chunks
     return [l[i:i + n] for i in range(0, len(l), n)]
 
+def lines_to_tokens(f, encoder):
+    # Yield a single text consisting of discrete samples fed line-by-line
+    # Load wine dataset
+    wines_path = "/content/drive/MyDrive/data/name_desc_nlp_ready.txt"
+    with open(wines_path, 'r', encoding='utf8') as f:
+        wines_raw = f.read().splitlines()
+    print(f"Loaded wine dataset of length: {len(wines_raw):,}")
+
+    # Remove wines with too short descriptions
+    wines_clean = []
+    for i in wines_raw:
+        try:
+            desc = i.split("[description]")[1]
+            if len(desc) > 150:
+                wines_clean.append(i)
+        except:
+            pass
+    print(f"Cleaned dataset has {len(wines_clean):,} samples")
+
+    enc.add_special_tokens(
+        {'eos_token':'<|startoftext|>',
+        'bos_token':'<|startoftext|>'
+        }
+    )
+    enc.add_tokens(['[prompt]','[response]','[category_1]',
+                        '[category_2]','[origin]','[description]',
+                        '<|endoftext|>'])
+    enc.pad_token = enc.eos_token
+    print("Modified tokenizer tokens")
+    #tokenizer_path = f'./tokenizer_gpt2'
+    #tokenizer.save_pretrained(tokenizer_path)
+    #print(f"Saved tokenizer to {tokenizer_path}")
+
+    wine_encodings = enc(wines_clean, max_length=250, padding=True, truncation=True)
+    print(f"Encoded dataset with attributes: {wine_encodings.keys()}")
+    print(f"Total encoded samples: {len(wine_encodings['input_ids']):,}")
+
+    yield wine_encodings
+
 
 def archive_to_tokens(f, encoder, args):
     # Generator that yields the contents of the files in an archive
@@ -182,7 +221,8 @@ def create_tfrecords(params, write_remainder=True, write_every_n_files=1, save_c
     tokenized_files_array = []
 
     for f in files:
-        for tokenized_files in archive_to_tokens(f, enc, args):
+        #for tokenized_files in archive_to_tokens(f, enc, args):
+        for tokenized_files in lines_to_tokens(f, enc):
             files_processed += 1
             if files_processed < resume_files_processed:
                 continue  # resume from checkpoint
