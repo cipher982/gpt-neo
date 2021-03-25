@@ -1,3 +1,5 @@
+the-eye.eu/
+
 # testing
 .test/
 
@@ -114,3 +116,5 @@ test/
 
 
 run_configs/
+ngrok-stable-linux-amd64.zip
+scraped_wines.tfrecord
