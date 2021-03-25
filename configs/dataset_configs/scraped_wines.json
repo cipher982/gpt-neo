@@ -1,0 +1,10 @@
+
+{
+  "path": "gs://wine-gpt/scraped_wines.tfrecord",
+  "eval_path": "",
+  "n_vocab": 50257,
+  "tokenizer_is_pretrained": true,
+  "tokenizer_path": "/content/gpt-neo/tokenizer_gpt2",
+  "eos_id": 50257,
+  "padding_id": 50257
+}
