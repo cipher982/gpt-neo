@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Configure git
+git config --global user.email "david010@gmail.com"
+git config --global user.name "David Rose"
+
 # Install g-cloud software
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 sudo apt-get install apt-transport-https ca-certificates gnupg
