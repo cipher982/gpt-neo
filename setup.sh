@@ -15,7 +15,7 @@ gsutil -m cp -r gs://wine-gpt/scraped_wines.tfrecord /content/gpt-neo/scraped_wi
 
 # Download the GPT3 model
 mkdir /content/model_store
-gsutil -m cp -r gs://wine-gpt/GPT3_XL /content/model_store/GPT3_XL
+gsutil -m cp -r gs://wine-gpt/GPT3_XL /content/model_store/
 
 # Download the pretrained model
 #wget -m -np -c -U "eye02" -w 2 -R "index.html*" "https://the-eye.eu/public/AI/gptneo-release/GPT3_XL/"
