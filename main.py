@@ -43,6 +43,7 @@ def parse_args():
     parser.add_argument("--sacred_id", type=str, default="nosacred", help="Sacred run id.")
     parser.add_argument("--entmax_sampling", action="store_true", help="(experimental) use entmax sampling")
     parser.add_argument("--export", action="store_true", help="If set, will export the model.")
+    parser.add_argument("--configs_dir", type=str, default='./configs')
     args = parser.parse_args()
     assert args.model is not None, "Model must be set"
     return args
@@ -53,7 +54,7 @@ def main(args):
     logger = setup_logging(args)
 
     # Read params of model
-    params = fetch_model_params(args.model)
+    params = fetch_model_params(args.model, args.configs_dir)
 
     # Fetch appropriate input functions
     input_fn = params.get("input_fn", "sequential_input")

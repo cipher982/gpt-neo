@@ -1,16 +1,19 @@
 import json
+import os
 from pathlib import Path
 from collections import defaultdict
 
-DATASETS = {}
 
-for path in Path("configs/dataset_configs").glob("*.json"):
-    dataset_id = path.stem
-    DATASETS[dataset_id] = json.loads(path.read_text())
+def get_datasets(configs_dir: str):   
+    DATASETS = {}
+    for path in Path(os.path.join(configs_dir, "dataset_configs")).glob("*.json"):
+        dataset_id = path.stem
+        DATASETS[dataset_id] = json.loads(path.read_text())
+    return DATASETS
 
-
-def fetch_model_params(model):
-    model_path = model if model.endswith(".json") else f"configs/{model}.json"
+def fetch_model_params(model, configs_dir):
+    DATASETS = get_datasets(configs_dir)
+    model_path = model if model.endswith(".json") else f"{configs_dir}/{model}.json"
     with open(model_path) as f:
         params = json.load(f)
 
