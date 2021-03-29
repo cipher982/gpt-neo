@@ -112,7 +112,7 @@ logs/
 *.log
 test_*
 test/
-.vscode
+#.vscode
 
 
 run_configs/

@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "neo",
+      "type": "python",
+      "request": "launch",
+      "program": "/content/gpt-neo/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--model", "GPT3_XL", 
+        "--tpu", "colab",
+        "--configs_dir", "/content/gpt-neo/configs"]
+    }
+  ]
+}
